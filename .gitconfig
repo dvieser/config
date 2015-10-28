@@ -1,0 +1,28 @@
+[user]
+        name = David Vieser
+        email = david@vieser.org
+[core]
+        excludesfile = /Users/dvieser/.gitignore_global
+[difftool "sourcetree"]
+        cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+        path =
+[mergetool "sourcetree"]
+        cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+        trustExitCode = true
+[alias]
+        co = checkout
+        create-pull-request = !sh -c 'stash pull-request $0'
+#[merge]
+#       ff = false
+#[branch]
+#       autosetuprebase = always
+[push]
+        default = current
+#[pull]
+#       rebase = preserve
+[color]
+        ui = auto
+[filter "media"]
+        required = true
+        clean = git media clean %f
+        smudge = git media smudge %f
