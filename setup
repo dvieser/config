@@ -1,0 +1,4 @@
+for file in .bash_profile .gitconfig ; do
+echo mv ~/$file ~/$file.orig
+ln -s $file ~/$file
+done

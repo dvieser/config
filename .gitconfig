@@ -1,28 +1,48 @@
 [user]
         name = David Vieser
         email = david@vieser.org
-[core]
-        excludesfile = /Users/dvieser/.gitignore_global
-[difftool "sourcetree"]
-        cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-        path =
-[mergetool "sourcetree"]
-        cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-        trustExitCode = true
-[alias]
-        co = checkout
-        create-pull-request = !sh -c 'stash pull-request $0'
-#[merge]
-#       ff = false
-#[branch]
-#       autosetuprebase = always
-[push]
-        default = current
-#[pull]
-#       rebase = preserve
 [color]
-        ui = auto
+  diff = auto
+  status = auto
+  branch = auto
+  ui = true
+
+[color "diff"]
+  whitespace = red reverse
+[core]
+	excludesfile = ~/.gitignore
+	autocrlf = input
+  editor = vim
+[alias]
+  a = add
+  b = branch
+  bb = for-each-ref --sort=-committerdate refs/heads/
+  c = commit -m
+  co = checkout
+  di = diff
+  dic = diff --cached
+  f = fetch
+  l = log
+  lf = log --format=fuller
+  lg = log --graph --pretty=format':%C(yellow)%h%C(green)%d%Creset %s %C(cyan) %an, %ar%Creset'
+  lgf = log --graph --pretty=fuller
+  m = merge
+  out = log origin..HEAD
+  pl = pull
+  plre = pull --rebase
+  ps = push
+  st = status
+  st = status
+  tagcommit = rev-list -n 1
+[format]
+  pretty = %C(yellow)%h%Creset  %C(cyan)%aN%Creset  %s  %C(red)(%cr)%Creset
+[branch]
+	autosetupmerge = true
+[rerere]
+	enabled = true
 [filter "media"]
-        required = true
-        clean = git media clean %f
-        smudge = git media smudge %f
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[credential]
+	helper = osxkeychain
