@@ -9,6 +9,8 @@ alias railss="unicorn -p 3000 -c config/unicorn.rb"
 alias git_cleanup="git fetch --prune ; git branch --merged | grep -vE 'master|dev' | grep -v '^*' | xargs git branch -d"
 alias git_releasenotes="git log master..dev --format=%s | grep -v -i ^Merge"
 alias webserver="python -m SimpleHTTPServer $portnum > /tmp/web-server.log 2>&1 &"
+alias sfdxopen="sfdx force:org:open -u DevHub"
+
 #export PS1='\w$(parse_git_branch) > '
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
