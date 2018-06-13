@@ -1,4 +1,5 @@
 #source ~/.profile
+export PATH="$PATH:/usr/local/apache-ant-1.10.3/bin"
 alias be='bundle exec'
 alias gpb="git rev-parse --abbrev-ref HEAD | xargs git push origin"
 alias gpull="git rev-parse --abbrev-ref HEAD | xargs git pull origin"
