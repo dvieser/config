@@ -4,6 +4,7 @@ alias be='bundle exec'
 alias gpb="git rev-parse --abbrev-ref HEAD | xargs git push origin"
 alias gpull="git rev-parse --abbrev-ref HEAD | xargs git pull origin"
 alias gpom="git pull origin master"
+alias gpod="git pull origin dev"
 alias gpum="git pull upstream master"
 alias gs="git status"
 alias railss="unicorn -p 3000 -c config/unicorn.rb"
