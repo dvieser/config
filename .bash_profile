@@ -13,6 +13,17 @@ alias git_reset="git co .; git clean -d -f"
 alias git_releasenotes="git log master..dev --format=%s | grep -v -i ^Merge"
 alias webserver="python -m SimpleHTTPServer $portnum > /tmp/web-server.log 2>&1 &"
 alias sfdxopen="sfdx force:org:open -u DevHub"
+alias lastnote="git log --pretty=format:'%h' -n 1 >> ~/Desktop/lastnote"
+
+function catnotes {
+    lastnotefile="/Users/dvieser/Desktop/lastnote"
+    lastnote=$(tail -1 $lastnotefile )
+    echo "Notes starting from $lastnote"
+    git log $lastnote..head --name-only --pretty=short |grep -v Author | grep -v ^commit |grep -v -i merge |grep -v package.xml | cat -s | perl -pe 's/    /\n## /g' | perl -pe 's/source/   * source/'
+    echo >> $lastnotefile
+    date >> $lastnotefile
+    git log --pretty=format:'%h' -n 1 >> $lastnotefile
+}
 
 #export PS1='\w$(parse_git_branch) > '
 
