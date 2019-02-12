@@ -14,12 +14,14 @@ alias git_releasenotes="git log master..dev --format=%s | grep -v -i ^Merge"
 alias webserver="python -m SimpleHTTPServer $portnum > /tmp/web-server.log 2>&1 &"
 alias sfdxopen="sfdx force:org:open -u DevHub"
 alias lastnote="git log --pretty=format:'%h' -n 1 >> ~/Desktop/lastnote"
+alias git_add_witespace="git add -A; git diff --cached -w | git apply --cached -R"
+alias git_pull="echo git xxx $(parse_git_branch)"
 
 function catnotes {
-    lastnotefile="/Users/dvieser/Desktop/lastnote"
+    lastnotefile="/Users/dvieser/Development/Salesforce/catfinancial/ant/lastnote"
     lastnote=$(tail -1 $lastnotefile )
     echo "Notes starting from $lastnote"
-    git log $lastnote..head --name-only --pretty=short |grep -v Author | grep -v ^commit |grep -v -i merge |grep -v package.xml | cat -s | perl -pe 's/    /\n## /g' | perl -pe 's/source/   * source/'
+    git log $lastnote..head --name-only --pretty=short |grep -v Author | grep -v ^commit |grep -v -i merge |grep -v -i conversion | grep -v package.xml | cat -s | perl -pe 's/    /\n## /g' | perl -pe 's/source/   * source/'
     echo >> $lastnotefile
     date >> $lastnotefile
     git log --pretty=format:'%h' -n 1 >> $lastnotefile
@@ -52,7 +54,7 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 function parse_git_branch {
   local ref=$(git symbolic-ref HEAD 2> /dev/null)
   if [[ -n $ref ]]; then
-    echo : `expr "$ref" : 'refs/heads/\(.*\)'`
+    echo `expr "$ref" : 'refs/heads/\(.*\)'`
   fi
 }
 
