@@ -1,5 +1,5 @@
 #source ~/.profile
-export PATH="$PATH:/usr/local/apache-ant-1.10.3/bin"
+export PATH="$PATH:/usr/local/apache-ant-1.9.14/bin"
 alias be='bundle exec'
 alias gpb="git rev-parse --abbrev-ref HEAD | xargs git push origin"
 alias gpull="git rev-parse --abbrev-ref HEAD | xargs git pull origin"
@@ -27,7 +27,9 @@ function catnotes {
     git log --pretty=format:'%h' -n 1 >> $lastnotefile
 }
 
-#export PS1='\w$(parse_git_branch) > '
+#export PS1='\W ($(parse_git_branch)) '
+#export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+export PS1=' \W$(__git_ps1 " (%s)")\$ '
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
