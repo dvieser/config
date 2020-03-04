@@ -1,5 +1,20 @@
 #source ~/.profile
 export PATH="$PATH:/usr/local/apache-ant-1.9.14/bin"
+
+function parse_git_branch {
+  local ref=$(git symbolic-ref HEAD 2> /dev/null)
+  if [[ -n $ref ]]; then
+    echo `expr "$ref" : 'refs/heads/\(.*\)'`
+  fi
+}
+
+function gbacp {
+git co -b $1
+git add .
+git commit -m "$2"
+gpb
+}
+
 alias be='bundle exec'
 alias gpb="git rev-parse --abbrev-ref HEAD | xargs git push origin"
 alias gpull="git rev-parse --abbrev-ref HEAD | xargs git pull origin"
@@ -27,42 +42,31 @@ function catnotes {
     git log --pretty=format:'%h' -n 1 >> $lastnotefile
 }
 
+source ~/Development/config/.git-prompt.sh
 #export PS1='\W ($(parse_git_branch)) '
 #export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 export PS1=' \W$(__git_ps1 " (%s)")\$ '
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi
+if hash brew 2>/dev/null; then  
+   if [ -f $(brew --prefix)/etc/bash_completion ]; then
+     . $(brew --prefix)/etc/bash_completion
+   fi
 
-#if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
-#  GIT_PROMPT_THEME=Single_line
-#  source "$(brew --prefix bash-git-prompt)/share/gitprompt.sh"
-#fi
+   #if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
+   #  GIT_PROMPT_THEME=Single_line
+   #  source "$(brew --prefix bash-git-prompt)/share/gitprompt.sh"
+   #fi
 
-#if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
-#fi
+   #if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
+   #fi
 
-# git tab completion (homebrew)
-if [ -f `brew --prefix`/etc/bash_completion.d/git-completion.bash ]; then
-    . `brew --prefix`/etc/bash_completion.d/git-completion.bash
-    export PS1='$(__git_ps1) \W\$ '
+   # git tab completion (homebrew)
+   if [ -f `brew --prefix`/etc/bash_completion.d/git-completion.bash ]; then
+       . `brew --prefix`/etc/bash_completion.d/git-completion.bash
+       export PS1='$(__git_ps1) \W\$ '
+   fi
 fi
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-function parse_git_branch {
-  local ref=$(git symbolic-ref HEAD 2> /dev/null)
-  if [[ -n $ref ]]; then
-    echo `expr "$ref" : 'refs/heads/\(.*\)'`
-  fi
-}
-
-function gbacp {
-git co -b $1
-git add .
-git commit -m "$2"
-gpb
-}
