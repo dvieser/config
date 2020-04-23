@@ -42,14 +42,24 @@ function catnotes {
     git log --pretty=format:'%h' -n 1 >> $lastnotefile
 }
 
-source ~/Development/config/.git-prompt.sh
+#source ~/Development/config/.git-prompt.sh
 #export PS1='\W ($(parse_git_branch)) '
 #export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-export PS1=' \W$(__git_ps1 " (%s)")\$ '
+##export PS1=' \W$(__git_ps1 " (%s)")\$ '
+PROMPT='%/> '
 
-if [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then 
-  source /usr/local/etc/bash_completion.d/git-completion.bash
-fi 
+# git prompt
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+RPROMPT=\$vcs_info_msg_0_
+# PROMPT=\$vcs_info_msg_0_'%# '
+zstyle ':vcs_info:git:*' formats '%b'
+
+#if [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then 
+#  source /usr/local/etc/bash_completion.d/git-completion.bash
+#fi 
 
 if hash brew 2>/dev/null; then  
    if [ -f $(brew --prefix)/etc/bash_completion ]; then
@@ -75,4 +85,7 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-source ~/Development/config/sfdx.bash
+# sfdx zsh completion
+fpath=(/Users/dvieser/Development/config/salesforce-cli-zsh-completion $fpath)
+autoload -U compinit
+compinit

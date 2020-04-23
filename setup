@@ -1,4 +1,4 @@
-for file in .bash_profile .gitconfig ; do
+for file in .zprofile .bash_profile .gitconfig ; do
 mv ~/$file ~/$file.orig
 ln -s `pwd`/$file ~/$file
 done
